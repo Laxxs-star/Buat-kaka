@@ -1,0 +1,411 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#100e0b">
+<title>Untuk Kakak — Dari Rafa</title>
+
+<style>
+:root {
+  --bg:#100e0b;
+  --gold:#d9b76a;
+  --gold-light:#f8e8b5;
+  --cream:#f7f0df;
+  --muted:#c9bea5;
+  --line:rgba(217,183,106,.34);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;min-height:100vh;color:var(--cream);
+  font-family:Georgia,"Times New Roman",serif;
+  background:radial-gradient(ellipse at 50% -10%,rgba(143,103,38,.30),transparent 48%),linear-gradient(155deg,#17130e,#090807 75%);
+  overflow-x:hidden
+}
+button{font:inherit}
+button:focus-visible{outline:2px solid var(--gold-light);outline-offset:4px}
+#intro{
+  position:fixed;inset:0;z-index:20;display:grid;place-items:center;
+  padding:24px;text-align:center;
+  background:radial-gradient(circle at 50% 35%,rgba(160,119,48,.24),transparent 35%),linear-gradient(145deg,#17130e,#080706);
+  transition:opacity .8s ease,visibility .8s ease
+}
+#intro.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.intro-card{
+  width:min(100%,430px);padding:34px 24px;border:1px solid var(--line);
+  border-radius:26px;background:rgba(255,255,255,.035);box-shadow:0 25px 80px #0009
+}
+.eyebrow{color:var(--gold);letter-spacing:.2em;font:11px/1.8 Arial,sans-serif;text-transform:uppercase}
+.intro-icon,.butterfly{font-size:54px;display:inline-block;filter:drop-shadow(0 0 14px #d9b76a55);animation:float 3.5s ease-in-out infinite}
+.intro-icon{margin:18px 0}
+.intro-card h1{font-size:clamp(32px,9vw,46px);color:var(--gold-light);margin:8px 0 14px;line-height:1.15}
+.intro-card p{color:var(--muted);line-height:1.8;font-size:15px}
+.gold-button,.outline-button{border-radius:999px;padding:14px 23px;cursor:pointer;min-height:48px;transition:transform .2s,filter .2s}
+.gold-button{color:#20180b;border:1px solid #f5df9b;background:linear-gradient(135deg,#f4dfa0,#b88b37);box-shadow:0 8px 28px #c39a4433;font:700 14px Arial,sans-serif}
+.outline-button{color:var(--gold-light);border:1px solid var(--line);background:rgba(255,255,255,.035);font:13px Arial,sans-serif}
+.gold-button:active,.outline-button:active{transform:scale(.97)}
+main{width:min(100% - 28px,760px);margin:0 auto;padding:30px 0 50px}
+.hero,.section{position:relative;border:1px solid var(--line);border-radius:24px;background:rgba(255,255,255,.055);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 18px 55px #0004}
+.hero{padding:34px 23px;text-align:center;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:7px;border:1px solid rgba(217,183,106,.10);border-radius:18px;pointer-events:none}
+h1.title{color:var(--gold-light);font-size:clamp(34px,9vw,56px);line-height:1.15;margin:14px 0}
+.gold-rule{color:var(--gold);letter-spacing:.3em;margin:20px 0}
+.type-text{max-width:570px;min-height:94px;margin:0 auto;color:#e9dfc9;font-size:clamp(16px,4vw,19px);line-height:1.9}
+.section{margin-top:18px;padding:25px 20px}
+.section h2{margin:0 0 12px;text-align:center;color:var(--gold-light);font-size:clamp(24px,6vw,31px)}
+.section-intro{color:var(--muted);text-align:center;font:13px/1.8 Arial,sans-serif;margin:0 auto 20px;max-width:520px}
+.controls{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.music-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px}
+.music-status{color:var(--muted);font:12px/1.7 Arial,sans-serif;overflow-wrap:anywhere}
+input[type=range]{width:100%;accent-color:var(--gold)}
+.envelope-wrap{max-width:390px;margin:0 auto}
+.envelope{display:block;width:100%;min-height:150px;padding:24px 14px;border:1px solid var(--gold);border-radius:14px;color:var(--gold-light);background:linear-gradient(145deg,#2c2417,#100d09);cursor:pointer;box-shadow:0 12px 30px #0005;overflow:hidden}
+.seal{display:grid;place-items:center;width:43px;height:43px;margin:0 auto 10px;border-radius:50%;background:linear-gradient(145deg,#d9b76a,#77551e);color:#20170b;font-size:20px}
+.env-title{font-size:22px;display:block}
+.envelope small{display:block;margin-top:9px;color:var(--muted);font:11px Arial,sans-serif;letter-spacing:.08em}
+.letter{display:none;margin-top:16px;padding:24px 20px;color:#3d2d18;background:linear-gradient(135deg,#fff8e7,#e8d6aa);border:1px solid #d4b56a;border-radius:5px 18px 5px 18px;box-shadow:0 15px 35px #0005;line-height:1.9;animation:letterIn .65s ease both}
+.letter.open{display:block}
+.letter h3{text-align:center;color:#79551e;font-size:25px;margin:0 0 15px}
+.letter p{margin:0 0 14px;font-size:15px}
+.signature{text-align:right;color:#79551e;font-style:italic;font-size:21px;margin-top:18px}
+.cake-area{text-align:center}
+.cake{font-size:84px;line-height:1.35;display:inline-block;transition:transform .3s}
+.cake.lit{animation:cakeGlow 1.8s ease-in-out infinite}
+.cake-message{min-height:26px;color:var(--gold-light);line-height:1.7;margin:12px 0 18px}
+.countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.timebox{border:1px solid var(--line);border-radius:13px;padding:13px 5px;background:#0002}
+.timebox strong{display:block;color:var(--gold-light);font-size:clamp(23px,6vw,32px);font-weight:normal}
+.timebox span{display:block;color:var(--muted);font:10px Arial,sans-serif;margin-top:6px}
+.surprise-box{display:none;padding:23px 15px;margin-top:16px;border:1px solid var(--line);border-radius:16px;background:#d9b76a0b;text-align:center;animation:letterIn .6s ease both}
+.surprise-box.show{display:block}
+.big-star{font-size:34px;color:var(--gold)}
+.surprise-box p{color:var(--gold-light);font-size:17px;line-height:1.9}
+.closing{text-align:center;padding:34px 18px 10px;color:var(--muted)}
+.signoff{color:var(--gold-light);font-size:28px;margin:12px 0}
+.end-heart{color:var(--gold);letter-spacing:.3em}
+#particles{position:fixed;inset:0;pointer-events:none;z-index:5;overflow:hidden}
+.particle{position:absolute;top:-30px;opacity:.45;animation:fall linear forwards;text-shadow:0 0 10px #d9b76a55}
+.confetti{position:fixed;z-index:30;top:-15px;width:7px;height:13px;pointer-events:none;animation:confettiFall linear forwards}
+.hidden-content{display:none!important}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-7deg)}50%{transform:translateY(-12px) rotate(7deg)}}
+@keyframes fall{to{transform:translateY(110vh) rotate(330deg);opacity:0}}
+@keyframes letterIn{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes cakeGlow{0%,100%{filter:drop-shadow(0 0 9px #d9b76a22)}50%{filter:drop-shadow(0 0 25px #f4d78b99)}}
+@keyframes confettiFall{to{transform:translateY(110vh) rotate(720deg);opacity:.15}}
+@media(min-width:650px){main{padding-top:42px}.hero{padding:48px 38px}.section{padding:30px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
+</style>
+</head>
+
+<body>
+<div id="intro">
+  <div class="intro-card">
+    <div class="eyebrow">A little gift from Rafa</div>
+    <div class="intro-icon">🎁</div>
+    <h1>Untuk Kakak,<br>Dengan Sayang</h1>
+    <p>Ada sedikit hadiah dan pesan yang ingin aku berikan di hari spesial Kakak.</p>
+    <button class="gold-button" id="openGift">✦ Buka Hadiah ✦</button>
+  </div>
+</div>
+
+<div id="particles" aria-hidden="true"></div>
+
+<main id="mainContent" class="hidden-content">
+  <section class="hero">
+    <div class="butterfly">🦋</div>
+    <div class="eyebrow">A special day for someone special</div>
+    <h1 class="title">Selamat Ulang Tahun,<br>Kakak! ✨</h1>
+    <div class="gold-rule">✦ ─── ♡ ─── ✦</div>
+    <p class="type-text" id="typedText" aria-live="polite"></p>
+    <div class="controls">
+      <button class="gold-button" id="celebrateBtn">✦ Rayakan Sekarang ✦</button>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Surat Kecil Untuk Kakak</h2>
+    <p class="section-intro">Ada pesan yang kusimpan khusus untuk Kakak. Ketuk amplopnya untuk membukanya.</p>
+    <div class="envelope-wrap">
+      <button class="envelope" id="envelopeBtn" aria-expanded="false">
+        <span class="seal">♥</span>
+        <span class="env-title">Untuk Kakak Tersayang</span>
+        <small id="envelopeHint">KETUK UNTUK MEMBUKA SURAT</small>
+      </button>
+
+      <article class="letter" id="letter" aria-hidden="true">
+        <div style="text-align:center;color:#a77b32;letter-spacing:.2em;margin-bottom:12px">✦ ─── ♡ ─── ✦</div>
+        <h3>Untuk Kakak Tersayang</h3>
+        <p>Hai, Kak. ❤️</p>
+        <p>Terima kasih ya, Kak, karena sudah hadir di hidup aku dan membuat aku merasakan bagaimana rasanya punya seorang kakak. Mungkin bagi orang lain, punya kakak adalah hal yang biasa. Tapi buat aku, bisa mengenal Kakak, merasakan perhatian Kakak, mendengar cerita Kakak, bahkan saat Kakak memarahi aku sekalipun, adalah sesuatu yang sangat berarti.</p>
+        <p>Terima kasih karena Kakak pernah membuat aku merasa punya seseorang untuk pulang, seseorang yang bisa aku rindukan, dan seseorang yang kehadirannya bisa membuat aku merasa lebih baik. Mungkin Kakak nggak pernah sadar seberapa besar arti Kakak buat aku, tapi aku benar-benar bersyukur karena pernah dipertemukan dengan Kakak.</p>
+        <p>Maaf ya, Kak, karena di hari spesial Kakak ini aku cuma bisa memberikan sesuatu yang sederhana seperti ini. Aku belum bisa memberikan hadiah yang istimewa atau sesuatu yang bisa membuat Kakak bahagia seperti yang aku inginkan.</p>
+        <p>Tapi aku membuat ini dengan hati yang tulus. Aku meluangkan waktu untuk membuatnya karena aku ingin Kakak tahu bahwa Kakak adalah sosok yang berarti buat aku. Mungkin hadiah ini nggak seberapa, tapi rasa terima kasih dan sayang yang aku titipkan di dalamnya benar-benar tulus.</p>
+        <p>Aku nggak tahu apakah kata-kata ini bisa membuat Kakak tersenyum, tapi aku berharap setidaknya Kakak bisa merasakan sedikit dari rasa sayang yang ingin aku sampaikan.</p>
+        <p>Selamat ulang tahun, Kakak. Semoga Kakak selalu sehat, bahagia, dimudahkan dalam setiap urusan, dan dipertemukan dengan banyak hal baik. Semoga selalu ada alasan untuk tersenyum, bahkan di hari-hari yang terasa berat.</p>
+        <p>Apa pun yang terjadi nanti, aku akan tetap bersyukur karena pernah mengenal Kakak dan merasakan hangatnya punya seorang kakak.</p>
+        <p><b>Aku sayang Kakak. Terima kasih sudah membuat aku tahu rasanya memiliki seorang kakak. Maaf karena saat ini aku baru bisa memberikan hadiah sederhana ini. ❤️</b></p>
+        <div style="text-align:center;color:#a77b32;margin-top:8px">♡</div>
+        <div class="signature">Dengan sayang,<br>Rafa</div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Make a Wish 🎂</h2>
+    <p class="section-intro">Sekarang waktunya membuat harapan. Tekan tombol di bawah untuk meniup lilin.</p>
+    <div class="cake-area">
+      <div class="cake lit" id="cake">🎂</div>
+      <div class="cake-message" id="cakeMessage">Pejamkan mata, buat satu harapan baik…</div>
+      <button class="gold-button" id="blowBtn">🌬️ Tiup Lilin</button>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Menuju Hari Spesial</h2>
+    <p class="section-intro">Hitung mundur menuju ulang tahun Kakak berikutnya.</p>
+    <div class="countdown" aria-live="polite">
+      <div class="timebox"><strong id="days">—</strong><span>HARI</span></div>
+      <div class="timebox"><strong id="hours">—</strong><span>JAM</span></div>
+      <div class="timebox"><strong id="minutes">—</strong><span>MENIT</span></div>
+      <div class="timebox"><strong id="seconds">—</strong><span>DETIK</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Musik Untuk Kakak 🎵</h2>
+    <p class="section-intro">Musik akan berjalan setelah tombol ditekan.</p>
+    <div class="music-row">
+      <div>
+        <div class="music-status" id="musicStatus"></div>
+        <label for="volume" class="music-status">Volume</label>
+        <input type="range" id="volume" min="0" max="1" step="0.05" value="0.65">
+      </div>
+      <button class="outline-button" id="musicBtn">▶ Putar</button>
+    </div>
+    <audio id="bgMusic" loop preload="none" src="musik-kakak.mp3"></audio>
+  </section>
+
+  <section class="section">
+    <h2>Satu Kejutan Lagi ✨</h2>
+    <p class="section-intro">Ada satu pesan lagi yang menunggu dibuka.</p>
+    <div class="controls">
+      <button class="gold-button" id="secretBtn">🔐 Buka Kejutan Rahasia</button>
+    </div>
+    <div class="surprise-box" id="surpriseBox" aria-hidden="true">
+      <div class="big-star">✦ ♡ ✦</div>
+      <p>Semoga hidup selalu memberi Kakak alasan untuk tersenyum. Terima kasih sudah menjadi bagian yang berarti dalam ceritaku. Aku selalu mendoakan hal-hal baik untuk Kakak. ❤️</p>
+      <button class="outline-button" id="confettiBtn">✨ Kirim Confetti</button>
+    </div>
+  </section>
+
+  <footer class="closing">
+    <div class="end-heart">♡ ✦ ♡</div>
+    <p>Semoga hari ini membawa hangat ke hati Kakak.</p>
+    <div class="signoff">Dengan sayang, Rafa</div>
+    <p class="eyebrow">Always wishing you good things</p>
+  </footer>
+</main>
+
+<script>
+/* Tanggal ulang tahun Kakak: 26 November */
+const BIRTHDAY_DAY = 26;
+const BIRTHDAY_MONTH = 11;
+
+const MAIN_MESSAGE =
+  "Kakak, terima kasih sudah membuat aku merasakan rasanya punya seorang kakak. Maaf karena aku baru bisa memberikan hadiah sederhana ini. Aku membuatnya dengan tulus dan penuh rasa sayang. Selamat ulang tahun, Kakak. Semoga Kakak selalu bahagia. — Rafa ❤️";
+
+const intro = document.getElementById("intro");
+const mainContent = document.getElementById("mainContent");
+const typedText = document.getElementById("typedText");
+let typingTimer = null;
+let opened = false;
+
+function typeMessage(text) {
+  if (typingTimer) clearInterval(typingTimer);
+  typedText.textContent = "";
+  let i = 0;
+  typingTimer = setInterval(() => {
+    typedText.textContent += text.charAt(i);
+    i++;
+    if (i >= text.length) {
+      clearInterval(typingTimer);
+      typingTimer = null;
+    }
+  }, 34);
+}
+
+document.getElementById("openGift").addEventListener("click", () => {
+  if (opened) return;
+  opened = true;
+  intro.classList.add("hidden");
+  mainContent.classList.remove("hidden-content");
+  typeMessage(MAIN_MESSAGE);
+  burstConfetti(95);
+  startParticles();
+});
+
+document.getElementById("celebrateBtn").addEventListener("click", () => {
+  burstConfetti(110);
+  document.getElementById("celebrateBtn").textContent = "♡ Hari Spesial Kakak ♡";
+});
+
+const envelopeBtn = document.getElementById("envelopeBtn");
+const letter = document.getElementById("letter");
+
+envelopeBtn.addEventListener("click", () => {
+  const isOpen = letter.classList.toggle("open");
+  envelopeBtn.setAttribute("aria-expanded", String(isOpen));
+  letter.setAttribute("aria-hidden", String(!isOpen));
+  document.getElementById("envelopeHint").textContent =
+    isOpen ? "KETUK LAGI UNTUK MENUTUP SURAT" : "KETUK UNTUK MEMBUKA SURAT";
+  envelopeBtn.querySelector(".env-title").textContent =
+    isOpen ? "Surat Terbuka ♡" : "Untuk Kakak Tersayang";
+  if (isOpen) burstConfetti(24);
+});
+
+let candleBlown = false;
+document.getElementById("blowBtn").addEventListener("click", () => {
+  const cake = document.getElementById("cake");
+  const message = document.getElementById("cakeMessage");
+  const btn = document.getElementById("blowBtn");
+  candleBlown = !candleBlown;
+
+  if (candleBlown) {
+    cake.classList.remove("lit");
+    cake.textContent = "🍰";
+    message.textContent = "Harapan baik untuk Kakak. Semoga satu per satu jadi nyata! ✨";
+    btn.textContent = "🕯️ Nyalakan Lagi";
+    burstConfetti(65);
+  } else {
+    cake.classList.add("lit");
+    cake.textContent = "🎂";
+    message.textContent = "Pejamkan mata, buat satu harapan baik…";
+    btn.textContent = "🌬️ Tiup Lilin";
+  }
+});
+
+function getNextBirthday() {
+  const now = new Date();
+  let year = now.getFullYear();
+  let target = new Date(year, BIRTHDAY_MONTH - 1, BIRTHDAY_DAY, 0, 0, 0);
+
+  if (target.getMonth() !== BIRTHDAY_MONTH - 1) {
+    target = new Date(year, BIRTHDAY_MONTH, 0, 0, 0, 0);
+  }
+  if (target <= now) {
+    year++;
+    target = new Date(year, BIRTHDAY_MONTH - 1, BIRTHDAY_DAY, 0, 0, 0);
+    if (target.getMonth() !== BIRTHDAY_MONTH - 1) {
+      target = new Date(year, BIRTHDAY_MONTH, 0, 0, 0, 0);
+    }
+  }
+  return target;
+}
+
+function updateCountdown() {
+  const now = new Date();
+  const target = getNextBirthday();
+  let diff = Math.max(0, target.getTime() - now.getTime());
+
+  const day = Math.floor(diff / 86400000);
+  diff %= 86400000;
+  const hour = Math.floor(diff / 3600000);
+  diff %= 3600000;
+  const minute = Math.floor(diff / 60000);
+  diff %= 60000;
+  const second = Math.floor(diff / 1000);
+
+  document.getElementById("days").textContent = String(day).padStart(2, "0");
+  document.getElementById("hours").textContent = String(hour).padStart(2, "0");
+  document.getElementById("minutes").textContent = String(minute).padStart(2, "0");
+  document.getElementById("seconds").textContent = String(second).padStart(2, "0");
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+const audio = document.getElementById("bgMusic");
+const musicBtn = document.getElementById("musicBtn");
+const musicStatus = document.getElementById("musicStatus");
+audio.volume = Number(document.getElementById("volume").value);
+
+document.getElementById("volume").addEventListener("input", e => {
+  audio.volume = Number(e.target.value);
+});
+
+musicBtn.addEventListener("click", async () => {
+  if (!audio.paused) {
+    audio.pause();
+    musicBtn.textContent = "▶ Putar";
+    musicStatus.textContent = "";
+    return;
+  }
+  try {
+    await audio.play();
+    musicBtn.textContent = "Ⅱ Jeda";
+    musicStatus.textContent = "";
+  } catch (err) {
+    musicStatus.textContent = "";
+    musicBtn.textContent = "▶ Putar";
+  }
+});
+
+audio.addEventListener("error", () => {
+  musicStatus.textContent = "";
+  musicBtn.textContent = "▶ Putar";
+});
+
+const secretBtn = document.getElementById("secretBtn");
+const surpriseBox = document.getElementById("surpriseBox");
+
+secretBtn.addEventListener("click", () => {
+  const show = !surpriseBox.classList.contains("show");
+  surpriseBox.classList.toggle("show", show);
+  surpriseBox.setAttribute("aria-hidden", String(!show));
+  secretBtn.textContent = show ? "🔒 Tutup Kejutan" : "🔐 Buka Kejutan Rahasia";
+  if (show) burstConfetti(85);
+});
+
+document.getElementById("confettiBtn").addEventListener("click", () => {
+  burstConfetti(120);
+});
+
+function burstConfetti(amount) {
+  const colors = ["#d9b76a", "#f8e8b5", "#b88b37", "#fff2ce", "#8e6b2c"];
+  for (let i = 0; i < amount; i++) {
+    const bit = document.createElement("span");
+    bit.className = "confetti";
+    bit.style.left = Math.random() * 100 + "vw";
+    bit.style.background = colors[Math.floor(Math.random() * colors.length)];
+    bit.style.animationDuration = (2.2 + Math.random() * 2.5) + "s";
+    bit.style.animationDelay = (Math.random() * .6) + "s";
+    bit.style.transform = "rotate(" + Math.random() * 360 + "deg)";
+    document.body.appendChild(bit);
+    setTimeout(() => bit.remove(), 5500);
+  }
+}
+
+let particleInterval = null;
+
+function startParticles() {
+  if (particleInterval) return;
+  const holder = document.getElementById("particles");
+
+  particleInterval = setInterval(() => {
+    if (document.hidden) return;
+    const p = document.createElement("span");
+    p.className = "particle";
+    p.textContent = Math.random() > .5 ? "♡" : "✦";
+    p.style.left = Math.random() * 100 + "%";
+    p.style.fontSize = (10 + Math.random() * 12) + "px";
+    p.style.color = Math.random() > .5 ? "#d9b76a" : "#f8e8b5";
+    const duration = 7 + Math.random() * 5;
+    p.style.animationDuration = duration + "s";
+    holder.appendChild(p);
+    setTimeout(() => p.remove(), duration * 1000);
+  }, 700);
+}
+</script>
+</body>
+</html>
